@@ -11,58 +11,58 @@ model := KNN new
 model classify: 1@1. ""Returns 1, because 1@0 and 0@1 were the nearest neighbors.""
 "
 Class {
-	#name : #MLkNN,
+	#name : #AIkNN,
 	#superclass : #Object,
 	#instVars : [
 		'k',
 		'data'
 	],
-	#category : #MLkNN
+	#category : #'AI-kNN'
 }
 
 { #category : #adding }
-MLkNN >> add: example label: label [
+AIkNN >> add: example label: label [
 	"Add a labelled example to the training set."
-	data add: ( MLkNNLabelledExample new label: label; example: example )
+	data add: ( AIkNNLabelledExample new label: label; example: example )
 ]
 
 { #category : #classification }
-MLkNN >> classify: example [
+AIkNN >> classify: example [
 	"Returns the label predicted for example"
 	^ self majorityLabel: ( self neighborsOf: example )
 ]
 
 { #category : #initialization }
-MLkNN >> initialize [
+AIkNN >> initialize [
 	super initialize.
 	k := 1.
 	data := OrderedCollection new.
 ]
 
 { #category : #accessing }
-MLkNN >> k [
+AIkNN >> k [
 	^ k
 ]
 
 { #category : #accessing }
-MLkNN >> k: anObject [
+AIkNN >> k: anObject [
 	k := anObject
 ]
 
 { #category : #classification }
-MLkNN >> majorityLabel: neighbors [
+AIkNN >> majorityLabel: neighbors [
 	"Returns the most common label in the neighbors collection"
 	^ neighbors isEmpty ifTrue: nil
 		ifFalse: [ ( neighbors collect: #label ) asBag sortedCounts first value ]
 ]
 
 { #category : #classification }
-MLkNN >> neighborsOf: example [
+AIkNN >> neighborsOf: example [
 	^ self neighborsOf: example k: ( k min: data size ).
 ]
 
 { #category : #classification }
-MLkNN >> neighborsOf: example k: numNeighbors [
+AIkNN >> neighborsOf: example k: numNeighbors [
 	"Return the numNeighbors clasest neighbors to example."
 	| neighbors |
 	neighbors := SortedCollection new sortBlock: [ :a :b | ( b example dist: example ) <= ( a example dist: example ) ];
@@ -75,6 +75,6 @@ MLkNN >> neighborsOf: example k: numNeighbors [
 ]
 
 { #category : #training }
-MLkNN >> train [
+AIkNN >> train [
 	"As a lazy classifier, KNN has no need for explicit training"
 ]

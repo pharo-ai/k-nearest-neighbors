@@ -1,40 +1,40 @@
 Class {
-	#name : #MLkNNLabelledExample,
+	#name : #AIkNNLabelledExample,
 	#superclass : #Object,
 	#instVars : [
 		'example',
 		'label'
 	],
-	#category : #MLkNN
+	#category : #'AI-kNN'
 }
 
 { #category : #accessing }
-MLkNNLabelledExample >> dist: labelledExample [
+AIkNNLabelledExample >> dist: labelledExample [
 	^ example dist: labelledExample example
 ]
 
 { #category : #accessing }
-MLkNNLabelledExample >> example [
+AIkNNLabelledExample >> example [
 	^ example
 ]
 
 { #category : #accessing }
-MLkNNLabelledExample >> example: anObject [
+AIkNNLabelledExample >> example: anObject [
 	example := anObject
 ]
 
 { #category : #accessing }
-MLkNNLabelledExample >> label [
+AIkNNLabelledExample >> label [
 	^ label
 ]
 
 { #category : #accessing }
-MLkNNLabelledExample >> label: anObject [
+AIkNNLabelledExample >> label: anObject [
 	label := anObject
 ]
 
 { #category : #printing }
-MLkNNLabelledExample >> printOn: aStream [
+AIkNNLabelledExample >> printOn: aStream [
 	aStream nextPut: $[.
 	self example printOn: aStream.
 	aStream nextPutAll: ' --> '.

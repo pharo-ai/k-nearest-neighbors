@@ -12,9 +12,9 @@ BaselineOfAIkNN >> baseline: spec [
 		do: [ 
 			spec 
 				package: 'AI-kNN';
-				package: 'AI-kNN-Tests'	with: [ spec requires: #('AI-MLkNN') ].
+				package: 'AI-kNN-Tests'	with: [ spec requires: #('AI-kNN') ].
 			spec 
-				group: 'Core' 						with: #('AI-MLkNN');
-				group: 'Tests' 						with: #('AI-MLkNN' 'AI-MLkNN-Tests');
+				group: 'Core' 						with: #('AI-kNN');
+				group: 'Tests' 						with: #('AI-kNN' 'AI-kNN-Tests');
 				group: 'default' 					with: #('Core' 'Tests') ]
 ]

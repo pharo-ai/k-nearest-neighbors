@@ -63,15 +63,23 @@ AIkNN >> neighborsOf: example [
 
 { #category : #classification }
 AIkNN >> neighborsOf: example k: numNeighbors [
+
 	"Return the numNeighbors clasest neighbors to example."
+
 	| neighbors |
-	neighbors := SortedCollection new sortBlock: [ :a :b | ( b example dist: example ) <= ( a example dist: example ) ];
-		addAll: ( data copyFrom: 1 to: numNeighbors );
-		reSort. "Initialize a bounded priority queue of neighbors,"
-	data do: [ :d | |  |
-		( ( example dist: d example ) < ( example dist: neighbors first example ) )
-			ifTrue: [ neighbors removeFirst; add: d ] ]. "and swap in closer neighbors as they are found."
-	^ neighbors.
+	neighbors := SortedCollection new
+		             sortBlock: [ :a :b | 
+			             (b example distanceTo: example)
+			             <= (a example distanceTo: example) ];
+		             addAll: (data copyFrom: 1 to: numNeighbors);
+		             reSort. "Initialize a bounded priority queue of neighbors,"
+	data do: [ :d | 
+		(example distanceTo: d example)
+		< (example distanceTo: neighbors first example) ifTrue: [ 
+			neighbors
+				removeFirst;
+				add: d ] ]. "and swap in closer neighbors as they are found."
+	^ neighbors
 ]
 
 { #category : #training }

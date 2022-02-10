@@ -10,7 +10,8 @@ Class {
 
 { #category : #accessing }
 AIkNNLabelledExample >> dist: labelledExample [
-	^ example dist: labelledExample example
+
+	^ example distanceTo: labelledExample example
 ]
 
 { #category : #accessing }

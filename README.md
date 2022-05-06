@@ -13,7 +13,7 @@ To install k nearest neighbours, go to the Playground (Ctrl+OW) in your [Pharo](
 ```Smalltalk
 Metacello new
   baseline: 'AIkNN';
-  repository: 'github://pharo-ai/kNN/src';
+  repository: 'github://pharo-ai/k-nearest-neighbors/src';
   load.
 ```
 

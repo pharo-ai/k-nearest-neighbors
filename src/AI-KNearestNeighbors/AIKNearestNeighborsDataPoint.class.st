@@ -27,12 +27,6 @@ AIKNearestNeighborsDataPoint >> = anObject [
 		self point = anObject point and: [ self label == anObject label ] ]
 ]
 
-{ #category : #accessing }
-AIKNearestNeighborsDataPoint >> dist: labelledExample [
-
-	^ point distanceTo: labelledExample example
-]
-
 { #category : #comparing }
 AIKNearestNeighborsDataPoint >> hash [
 
@@ -66,9 +60,7 @@ AIKNearestNeighborsDataPoint >> point: anObject [
 { #category : #printing }
 AIKNearestNeighborsDataPoint >> printOn: aStream [
 
-	aStream nextPut: $[.
 	point printOn: aStream.
 	aStream nextPutAll: ' --> '.
-	label printOn: aStream.
-	aStream nextPut: $]
+	label printOn: aStream
 ]

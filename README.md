@@ -12,7 +12,7 @@ To install k nearest neighbours, go to the Playground (Ctrl+OW) in your [Pharo](
 
 ```Smalltalk
 Metacello new
-  baseline: 'AIkNN';
+  baseline: 'AIKNearestNeighbors';
   repository: 'github://pharo-ai/k-nearest-neighbors/src';
   load.
 ```
@@ -23,8 +23,8 @@ If you want to add a dependency on kNN to your project, include the following li
 
 ```Smalltalk
 spec
-  baseline: 'AIkNN'
-  with: [ spec repository: 'github://pharo-ai/kNN/src' ].
+  baseline: 'AIKNearestNeighbors'
+  with: [ spec repository: 'github://pharo-ai/k-nearest-neighbors/src' ].
 ```
 
 If you are new to baselines and Metacello, check out the [Baselines](https://github.com/pharo-open-documentation/pharo-wiki/blob/master/General/Baselines.md) tutorial on Pharo Wiki.

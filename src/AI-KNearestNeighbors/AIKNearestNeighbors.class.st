@@ -1,14 +1,21 @@
 "
-I am a rudimentary K-NearestNeighbors classifier. 
+I am a K-NearestNeighbors classifier. 
 
-I store my data in instances of LabelledExample, and return class labels for unclassified test examples.
+I store my data in instances of AIKNearestNeighborsDataPoint, and return class labels for unclassified test examples.
 
-model := KNN new 
+```
+model := AIKNearestNeighbors new.
+model
 	k: 3;
-	add: 0@0 label: 0;
-	add: 1@0 label: 1;
-	add: 0@1 label: 1.
-model classify: 1@1. ""Returns 1, because 1@0 and 0@1 were the nearest neighbors.""
+	fitX: #( #(0 0) #(1 0) #(0 1) ) y: #(0 1 1).
+```
+
+```
+model predict: #( #(1 1) )
+""Returns 1, because 1@0 and 0@1 are the nearest neighbors.""
+```
+
+
 "
 Class {
 	#name : #AIKNearestNeighbors,

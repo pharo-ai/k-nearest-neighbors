@@ -1,3 +1,6 @@
+"
+I am an object used by AIKNearestNeighbors to store the points along with its labels. I override the equality to be able to compare two equal points with equal labels
+"
 Class {
 	#name : #AIKNearestNeighborsDataPoint,
 	#superclass : #Object,

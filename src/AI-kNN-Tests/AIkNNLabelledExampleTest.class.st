@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 AIkNNLabelledExampleTest >> setUp [
 	super setUp.
-	model := AIkNNLabelledExample new
+	model := AIKNearestNeighborsDataPoint new
 			 label: 1;
 			 example: (10 @ 1)
 ]
@@ -19,7 +19,7 @@ AIkNNLabelledExampleTest >> setUp [
 AIkNNLabelledExampleTest >> testDist [
 
 	| model1 |
-	model1 := AIkNNLabelledExample new
+	model1 := AIKNearestNeighborsDataPoint new
 		          label: 1;
 		          example: 9 @ 1.
 	self assert: (model dist: model1) equals: 1

@@ -8,9 +8,15 @@ Class {
 BaselineOfAIkNN >> baseline: spec [
 
 	<baseline>
-	spec for: #( common ) do: [ 
+	spec for: #( common ) do: [
+		"Internal dependencies"
 		spec
-			package: 'AI-kNN';
+			baseline: 'AIInternalEditDistances'
+			with: [ spec repository: 'github://pharo-ai/external-dependencies' ].
+			
+		"Packages"
+		spec
+			package: 'AI-kNN' with: [ spec requires: #( 'AIInternalEditDistances' ) ];
 			package: 'AI-kNN-Tests' with: [ spec requires: #( 'AI-kNN' ) ].
 
 		spec

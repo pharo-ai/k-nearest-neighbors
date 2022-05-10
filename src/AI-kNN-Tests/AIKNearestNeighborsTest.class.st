@@ -10,18 +10,17 @@ Class {
 { #category : #running }
 AIKNearestNeighborsTest >> setUp [
 
+	| x y pointsWithLabelOne pointsWithLabelZero |
 	super setUp.
+	pointsWithLabelOne := #( #( 10 1 ) #( 11 2 ) #( 9 3 ) #( 8 4 ) ).
+	pointsWithLabelZero := #( #( -10 1 ) #( -11 2 ) #( -9 3 ) ).
+	x := pointsWithLabelOne , pointsWithLabelZero.
+	y := (Array new: pointsWithLabelOne size withAll: 1) , (Array new: pointsWithLabelZero size withAll: 0).
+	
 	model := AIKNearestNeighbors new.
-	model k: 3.
-	{ 
-		(10 @ 1).
-		(11 @ 2).
-		(9 @ 3).
-		(8 @ 4) } do: [ :p | model add: p label: 1 ].
-	{ 
-		(-10 @ 1).
-		(-11 @ 2).
-		(-9 @ 3) } do: [ :p | model add: p label: 0 ]
+	model
+		k: 3;
+		fitX: x y: y
 ]
 
 { #category : #testing }
@@ -30,83 +29,67 @@ AIKNearestNeighborsTest >> testClassifyWithEmptyModel [
 	"It shouldnt work since there is no neighbors"
 
 	model := AIKNearestNeighbors new.
-	self should: [ model classify: 6 @ 0 ] raise: Error
+	self should: [ model predict: #( #( 6 0 ) ) ] raise: Error
 ]
 
 { #category : #testing }
 AIKNearestNeighborsTest >> testClassifyWithLabelAsFloat [
 
-	model := AIKNearestNeighbors new.
-	model k: 3.
-	{ 
-		(10 @ 1).
-		(11 @ 2).
-		(9 @ 3).
-		(8 @ 4) } do: [ :p | model add: p label: 1.5 ].
-	{ 
-		(-10 @ 1).
-		(-11 @ 2).
-		(-9 @ 3) } do: [ :p | model add: p label: 0.5 ].
+	| pointsWithLabelOnePointFive pointsWithLabelZeroPointFive x y |
+	pointsWithLabelOnePointFive := #( #( 10 1 ) #( 11 2 ) #( 9 3 ) #( 8 4 ) ).
+	pointsWithLabelZeroPointFive := #( #( -10 1 ) #( -11 2 ) #( -9 3 ) ).
+	x := pointsWithLabelOnePointFive , pointsWithLabelZeroPointFive.
+	y := (Array new: pointsWithLabelOnePointFive size withAll: 1.5) , (Array new: pointsWithLabelZeroPointFive size withAll: 0.5).
 
-	self assert: (model classify: 6 @ 0) equals: 1.5.
-	self assert: (model classify: -6 @ 0) equals: 0.5
+	model
+		k: 3;
+		fitX: x y: y.
+
+	self
+		assert: (model predict: #( #( 6 0 ) #( -6 0 ) ))
+		equals: #( 1.5 0.5 )
 ]
 
 { #category : #testing }
 AIKNearestNeighborsTest >> testClassifyWithLabelAsInteger [
 
-	self assert: (model classify: 6 @ 0) equals: 1.
-	self assert: (model classify: -6 @ 0) equals: 0
+	self
+		assert: (model predict: #( #( 6 0 ) #( -6 0 ) ))
+		equals: #( 1 0 )
 ]
 
 { #category : #testing }
 AIKNearestNeighborsTest >> testClassifyWithLabelAsString [
 
-	model := AIKNearestNeighbors new.
-	model k: 3.
-	{ 
-		(10 @ 1).
-		(11 @ 2).
-		(9 @ 3).
-		(8 @ 4) } do: [ :p | model add: p label: 'a' ].
-	{ 
-		(-10 @ 1).
-		(-11 @ 2).
-		(-9 @ 3) } do: [ :p | model add: p label: 'b' ].
-		
-	self assert: (model classify: 6 @ 0) equals: 'a'.
-	self assert: (model classify: -6 @ 0) equals: 'b'
+	| pointsWithLabelA pointsWithLabelB x y |
+	pointsWithLabelA := #( #( 10 1 ) #( 11 2 ) #( 9 3 ) #( 8 4 ) ).
+	pointsWithLabelB := #( #( -10 1 ) #( -11 2 ) #( -9 3 ) ).
+	x := pointsWithLabelA , pointsWithLabelB.
+	y := (Array new: pointsWithLabelA size withAll: 'a') , (Array new: pointsWithLabelB size withAll: 'b').
+
+	model
+		k: 3;
+		fitX: x y: y.
+
+	self
+		assert: (model predict: #( #( 6 0 ) #( -6 0 ) ))
+		equals: #( 'a' 'b' )
 ]
 
 { #category : #testing }
 AIKNearestNeighborsTest >> testClassifyWithMixedLabel [
 
-	model := AIKNearestNeighbors new.
-	model k: 3.
-	{ 
-		(10 @ 1).
-		(11 @ 2).
-		(9 @ 3).
-		(8 @ 4) } do: [ :p | model add: p label: 'a' ].
-	{ 
-		(-10 @ 1).
-		(-11 @ 2).
-		(-9 @ 3) } do: [ :p | model add: p label: 1 ].
+	| pointsWithLabelA pointsWithLabelOne x y |
+	pointsWithLabelA := #( #( 10 1 ) #( 11 2 ) #( 9 3 ) #( 8 4 ) ).
+	pointsWithLabelOne := #( #( -10 1 ) #( -11 2 ) #( -9 3 ) ).
+	x := pointsWithLabelA , pointsWithLabelOne.
+	y := (Array new: pointsWithLabelA size withAll: 'a') , (Array new: pointsWithLabelOne size withAll: 1).
 
-	self assert: (model classify: 6 @ 0) equals: 'a'.
-	self assert: (model classify: -6 @ 0) equals: 1
-]
+	model
+		k: 3;
+		fitX: x y: y.
 
-{ #category : #testing }
-AIKNearestNeighborsTest >> testNeighbors [
-	self assert: ( ( model neighborsOf: 10@0 ) allSatisfy: [ :p | p label = 1 ] ).
-	self assert: ( ( model neighborsOf: -10@0 ) allSatisfy: [ :p | p label = 0 ] ).
-]
-
-{ #category : #testing }
-AIKNearestNeighborsTest >> testTooFewNeighbors [
-"It shouldnt work since there is not 100 neighbors"
-	model k: 100.
-	self assert: (model classify: 6 @ 0) equals: 1.
-	self assert: (model classify: -6 @ 0) equals: 0
+	self
+		assert: (model predict: #( #( 6 0 ) #( -6 0 ) ))
+		equals: #( 'a' 1 )
 ]

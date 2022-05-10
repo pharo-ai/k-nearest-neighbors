@@ -15,31 +15,32 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'k',
-		'data'
+		'data',
+		'distance'
 	],
 	#category : #'AI-kNN'
 }
 
-{ #category : #adding }
-AIKNearestNeighbors >> add: example label: label [
-
-	"Add a labelled example to the training set."
-
-	data add: (AIkNNLabelledExample new
-		label: label;
-		example: example)
-]
-
 { #category : #classification }
 AIKNearestNeighbors >> classify: example [
-	"Returns the label predicted for example"
-	^ self majorityLabel: ( self neighborsOf: example )
+
+	^ self
+		deprecated: ''
+		transformWith: '`@r classify: `q' -> '`@r predict: `q'
+]
+
+{ #category : #api }
+AIKNearestNeighbors >> fitX: inputMatrix y: actualValues [
+
+	data := inputMatrix with: actualValues collect: [ :aPoint :aLabel | 
+		AIKNearestNeighborsDataPoint point: aPoint label: aLabel ]
 ]
 
 { #category : #initialization }
 AIKNearestNeighbors >> initialize [
 
 	super initialize.
+	self useEuclideanDistance.
 	k := 1.
 	data := OrderedCollection new
 ]
@@ -55,40 +56,50 @@ AIKNearestNeighbors >> k: anObject [
 ]
 
 { #category : #classification }
-AIKNearestNeighbors >> majorityLabel: neighbors [
-	"Returns the most common label in the neighbors collection"
-	^ neighbors isEmpty ifTrue: nil
-		ifFalse: [ ( neighbors collect: #label ) asBag sortedCounts first value ]
-]
+AIKNearestNeighbors >> kNeighborsOf: aPoint [
 
-{ #category : #classification }
-AIKNearestNeighbors >> neighborsOf: example [
-	^ self neighborsOf: example k: ( k min: data size ).
-]
-
-{ #category : #classification }
-AIKNearestNeighbors >> neighborsOf: example k: numNeighbors [
-
-	"Return the numNeighbors clasest neighbors to example."
-
-	| neighbors |
-	neighbors := SortedCollection new
-		             sortBlock: [ :a :b | 
-			             (b example distanceTo: example)
-			             <= (a example distanceTo: example) ];
-		             addAll: (data copyFrom: 1 to: numNeighbors);
-		             reSort. "Initialize a bounded priority queue of neighbors,"
-	data do: [ :d | 
-		(example distanceTo: d example)
-		< (example distanceTo: neighbors first example) ifTrue: [ 
-			neighbors
-				removeFirst;
-				add: d ] ]. "and swap in closer neighbors as they are found."
-	^ neighbors
-]
-
-{ #category : #training }
-AIKNearestNeighbors >> trainX: inputMatrix y: actualValues [
-
+	"| distances sortedNeighbors |
+	distances := data collect: [ :knnDataPoint | 
+		distance distanceBetween: knnDataPoint point and: aPoint ].
 	
+	sortedNeighbors := distances sort: [:a :b | a <= b].
+	^ sortedNeighbors first: numNeighbors"
+
+	| sortedNeighborsOfPoint |
+	
+	sortedNeighborsOfPoint := data copy sort: [:a :b |
+		(distance distanceBetween: a point and: aPoint) <= (distance distanceBetween: b point and: aPoint) ].
+	
+	^ sortedNeighborsOfPoint first: k	
+]
+
+{ #category : #classification }
+AIKNearestNeighbors >> majorityLabel: neighbors [
+
+	"^ neighbors isEmpty
+		ifTrue: nil
+		ifFalse: [ (neighbors collect: #label) asBag sortedCounts first value ]"
+
+	^ (neighbors collect: [ :each | each label ]) asBag sortedCounts first value
+]
+
+{ #category : #api }
+AIKNearestNeighbors >> predict: aCollectionOfPoints [
+
+	^ aCollectionOfPoints collect: [ :aPoint | 
+		| neighbors |
+		neighbors := self kNeighborsOf: aPoint.
+		self majorityLabel: neighbors ]
+]
+
+{ #category : #api }
+AIKNearestNeighbors >> useEuclideanDistance [
+
+	distance := AIEuclideanDistance new
+]
+
+{ #category : #api }
+AIKNearestNeighbors >> useManhattanDistance [
+
+	distance := AIManhattanDistance new
 ]

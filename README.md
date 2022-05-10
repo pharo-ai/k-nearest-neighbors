@@ -1,6 +1,6 @@
-[![Build status](https://github.com/pharo-ai/kNN/workflows/CI/badge.svg)](https://github.com/pharo-ai/kNN/actions/workflows/test.yml)
-[![Coverage Status](https://coveralls.io/repos/github/pharo-ai/kNN/badge.svg?branch=master)](https://coveralls.io/github/pharo-ai/kNN?branch=master)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/pharo-ai/kNN/master/LICENSE)
+[![Build status](https://github.com/pharo-ai/k-nearest-neighbors/workflows/CI/badge.svg)](https://github.com/pharo-ai/k-nearest-neighbors/actions/workflows/test.yml)
+[![Coverage Status](https://coveralls.io/repos/github/pharo-ai/k-nearest-neighbors/badge.svg?branch=master)](https://coveralls.io/github/pharo-ai/k-nearest-neighbors?branch=master)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/pharo-ai/k-nearest-neighbors/master/LICENSE)
 
 ## Description
 
@@ -12,7 +12,7 @@ To install k nearest neighbours, go to the Playground (Ctrl+OW) in your [Pharo](
 
 ```Smalltalk
 Metacello new
-  baseline: 'AIkNN';
+  baseline: 'AIKNearestNeighbors';
   repository: 'github://pharo-ai/k-nearest-neighbors/src';
   load.
 ```
@@ -23,8 +23,8 @@ If you want to add a dependency on kNN to your project, include the following li
 
 ```Smalltalk
 spec
-  baseline: 'AIkNN'
-  with: [ spec repository: 'github://pharo-ai/kNN/src' ].
+  baseline: 'AIKNearestNeighbors'
+  with: [ spec repository: 'github://pharo-ai/k-nearest-neighbors/src' ].
 ```
 
 If you are new to baselines and Metacello, check out the [Baselines](https://github.com/pharo-open-documentation/pharo-wiki/blob/master/General/Baselines.md) tutorial on Pharo Wiki.

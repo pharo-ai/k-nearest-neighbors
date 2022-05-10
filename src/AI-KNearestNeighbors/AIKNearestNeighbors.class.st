@@ -18,16 +18,8 @@ Class {
 		'data',
 		'distance'
 	],
-	#category : #'AI-kNN'
+	#category : #'AI-KNearestNeighbors'
 }
-
-{ #category : #classification }
-AIKNearestNeighbors >> classify: example [
-
-	^ self
-		deprecated: ''
-		transformWith: '`@r classify: `q' -> '`@r predict: `q'
-]
 
 { #category : #api }
 AIKNearestNeighbors >> fitX: inputMatrix y: actualValues [
@@ -41,29 +33,23 @@ AIKNearestNeighbors >> initialize [
 
 	super initialize.
 	self useEuclideanDistance.
-	k := 1.
-	data := OrderedCollection new
+	k := 1
 ]
 
 { #category : #accessing }
 AIKNearestNeighbors >> k [
+
 	^ k
 ]
 
-{ #category : #accessing }
-AIKNearestNeighbors >> k: anObject [
-	k := anObject
+{ #category : #api }
+AIKNearestNeighbors >> k: anInteger [
+
+	k := anInteger
 ]
 
 { #category : #classification }
 AIKNearestNeighbors >> kNeighborsOf: aPoint [
-
-	"| distances sortedNeighbors |
-	distances := data collect: [ :knnDataPoint | 
-		distance distanceBetween: knnDataPoint point and: aPoint ].
-	
-	sortedNeighbors := distances sort: [:a :b | a <= b].
-	^ sortedNeighbors first: numNeighbors"
 
 	| sortedNeighborsOfPoint |
 	
@@ -75,10 +61,6 @@ AIKNearestNeighbors >> kNeighborsOf: aPoint [
 
 { #category : #classification }
 AIKNearestNeighbors >> majorityLabel: neighbors [
-
-	"^ neighbors isEmpty
-		ifTrue: nil
-		ifFalse: [ (neighbors collect: #label) asBag sortedCounts first value ]"
 
 	^ (neighbors collect: [ :each | each label ]) asBag sortedCounts first value
 ]

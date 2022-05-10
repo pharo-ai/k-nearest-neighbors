@@ -5,7 +5,7 @@ Class {
 		'label',
 		'point'
 	],
-	#category : #'AI-kNN'
+	#category : #'AI-KNearestNeighbors'
 }
 
 { #category : #'instance creation' }
@@ -17,10 +17,23 @@ AIKNearestNeighborsDataPoint class >> point: aPoint label: aLabel [
 		yourself
 ]
 
+{ #category : #comparing }
+AIKNearestNeighborsDataPoint >> = anObject [
+
+	^ self class == anObject class and: [ 
+		self point = anObject point and: [ self label == anObject label ] ]
+]
+
 { #category : #accessing }
 AIKNearestNeighborsDataPoint >> dist: labelledExample [
 
 	^ point distanceTo: labelledExample example
+]
+
+{ #category : #comparing }
+AIKNearestNeighborsDataPoint >> hash [
+
+	^ point hash bitXor: label hash
 ]
 
 { #category : #accessing }

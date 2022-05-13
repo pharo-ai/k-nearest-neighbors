@@ -9,14 +9,14 @@ BaselineOfAIKNearestNeighbors >> baseline: spec [
 
 	<baseline>
 	spec for: #( common ) do: [
-		"Internal dependencies"
+		"pharo-ai dependencies"
 		spec
-			baseline: 'AIInternalEditDistances'
-			with: [ spec repository: 'github://pharo-ai/external-dependencies' ].
+			baseline: 'AIEditDistances' 
+			with: [ spec repository: 'github://pharo-ai/edit-distances/src' ].
 			
 		"Packages"
 		spec
-			package: 'AI-KNearestNeighbors' with: [ spec requires: #( 'AIInternalEditDistances' ) ];
+			package: 'AI-KNearestNeighbors' with: [ spec requires: #( 'AIEditDistances' ) ];
 			package: 'AI-KNearestNeighbors-Tests' with: [ spec requires: #( 'AI-KNearestNeighbors' ) ].
 
 		spec

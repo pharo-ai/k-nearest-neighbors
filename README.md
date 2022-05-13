@@ -4,7 +4,9 @@
 
 ## Description
 
-k nearest neighbours implementation in Pharo
+k Nearest Neighbors implementation in Pharo.
+
+More information in the pharo-ai wiki page: https://github.com/pharo-ai/wiki/blob/master/wiki/MachineLearning/k-nearest-neighbors.md
 
 ## How to install it?
 
@@ -28,7 +30,3 @@ spec
 ```
 
 If you are new to baselines and Metacello, check out the [Baselines](https://github.com/pharo-open-documentation/pharo-wiki/blob/master/General/Baselines.md) tutorial on Pharo Wiki.
-
-## How to use it?
-
-WiP

@@ -96,6 +96,12 @@ AIKNearestNeighbors >> useEuclideanDistance [
 ]
 
 { #category : #api }
+AIKNearestNeighbors >> useHammingDistance [
+
+	distance := AIHammingDistance new
+]
+
+{ #category : #api }
 AIKNearestNeighbors >> useManhattanDistance [
 
 	distance := AIManhattanDistance new

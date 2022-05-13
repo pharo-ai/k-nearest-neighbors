@@ -28,6 +28,14 @@ Class {
 	#category : #'AI-KNearestNeighbors'
 }
 
+{ #category : #'instance creation' }
+AIKNearestNeighbors class >> k: anInteger [
+
+	^ self new
+		k: anInteger;
+		yourself
+]
+
 { #category : #api }
 AIKNearestNeighbors >> fitX: inputMatrix y: actualValues [
 
@@ -91,4 +99,10 @@ AIKNearestNeighbors >> useEuclideanDistance [
 AIKNearestNeighbors >> useManhattanDistance [
 
 	distance := AIManhattanDistance new
+]
+
+{ #category : #api }
+AIKNearestNeighbors >> useMinkowskiDistanceWithPValue: anInteger [
+
+	distance := AIMinkowskiDistance p: anInteger
 ]

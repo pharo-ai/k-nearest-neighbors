@@ -6,7 +6,7 @@
 
 k Nearest Neighbors implementation in Pharo.
 
-More information in the pharo-ai wiki page: https://github.com/pharo-ai/wiki/blob/master/wiki/MachineLearning/k-nearest-neighbors.md
+More information on the pharo-ai wiki page: https://github.com/pharo-ai/wiki/blob/master/wiki/MachineLearning/k-nearest-neighbors.md
 
 ## How to install it?
 
